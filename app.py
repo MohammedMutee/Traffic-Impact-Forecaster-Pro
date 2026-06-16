@@ -8,7 +8,15 @@ from openai import OpenAI
 from fpdf import FPDF
 import folium
 from streamlit_folium import st_folium
-import config
+try:
+    import config
+    GLOBAL_OWM_API_KEY = config.OWM_API_KEY
+    GLOBAL_TOMTOM_API_KEY = config.TOMTOM_API_KEY
+    GLOBAL_NVIDIA_API_KEY = config.NVIDIA_API_KEY
+except ImportError:
+    GLOBAL_OWM_API_KEY = st.secrets["OWM_API_KEY"]
+    GLOBAL_TOMTOM_API_KEY = st.secrets["TOMTOM_API_KEY"]
+    GLOBAL_NVIDIA_API_KEY = st.secrets["NVIDIA_API_KEY"]
 
 # Must be the first Streamlit command
 st.set_page_config(page_title="Traffic Impact Forecaster", layout="wide")
@@ -279,8 +287,8 @@ if model and encoders:
         if st.button("Generate Live Forecast"):
             # --- REAL API INTEGRATION ---
             with st.spinner("Connecting to OpenWeatherMap and TomTom APIs..."):
-                OWM_API_KEY = config.OWM_API_KEY
-                TOMTOM_API_KEY = config.TOMTOM_API_KEY
+                OWM_API_KEY = GLOBAL_OWM_API_KEY
+                TOMTOM_API_KEY = GLOBAL_TOMTOM_API_KEY
                 
                 is_raining = 0
                 visibility_index = 10
@@ -366,7 +374,7 @@ if model and encoders:
             
             # Generate Initial AI Insight
             with st.spinner("Command Center AI is analyzing the situation..."):
-                nv_api_key = config.NVIDIA_API_KEY
+                nv_api_key = GLOBAL_NVIDIA_API_KEY
                 client = OpenAI(base_url="https://integrate.api.nvidia.com/v1", api_key=nv_api_key, timeout=15.0)
                 
                 system_prompt = f"You are an elite Traffic Operations Commander AI assistant. You have deep expertise in urban traffic management, resource allocation, and emergency diversion tactics. Be professional, concise, and do not use emojis."
@@ -513,7 +521,7 @@ if st.session_state.forecast_data:
                 
                 with st.chat_message("assistant"):
                     with st.spinner("AI is thinking..."):
-                        nv_api_key = config.NVIDIA_API_KEY
+                        nv_api_key = GLOBAL_NVIDIA_API_KEY
                         client = OpenAI(base_url="https://integrate.api.nvidia.com/v1", api_key=nv_api_key, timeout=15.0)
                         try:
                             response_content = call_ai_with_fallback(client, st.session_state.chat_history)
