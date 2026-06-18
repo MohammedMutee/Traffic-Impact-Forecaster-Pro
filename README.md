@@ -4,6 +4,8 @@ An AI-augmented urban traffic forecasting command center tailored exclusively fo
 
 Built for the Flipkart Round 2 Traffic Management evaluation, this system uses an advanced XGBoost Machine Learning model paired with real-time environmental APIs and NVIDIA NIM Generative AI to act as a virtual Incident Commander.
 
+**🌐 Live Demo:** [https://traffic-impact-forecaster-pro-vesrdyj8apmec9dmcvdrzu.streamlit.app/](https://traffic-impact-forecaster-pro-vesrdyj8apmec9dmcvdrzu.streamlit.app/)
+
 ---
 
 ## 🌟 Key Features
