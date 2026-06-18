@@ -25,7 +25,7 @@ Ensure all files are stored in the same working directory.
 ### 2. Install Dependencies
 Run the following command to install the required Python libraries:
 ```bash
-pip install streamlit pandas numpy xgboost openai fpdf2 folium streamlit-folium requests
+pip install -r requirements.txt
 ```
 
 ### 3. API Keys (Configuration)
