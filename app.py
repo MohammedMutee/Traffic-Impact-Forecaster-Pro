@@ -7,7 +7,7 @@ import requests
 from openai import OpenAI
 from fpdf import FPDF
 import folium
-from streamlit_folium import st_folium
+import streamlit.components.v1 as components
 try:
     import config
     GLOBAL_OWM_API_KEY = config.OWM_API_KEY
@@ -406,7 +406,7 @@ if model and encoders:
                     tooltip=f"Impact: {map_data['plan']['Level']}",
                     icon=folium.Icon(color="red", icon="info-sign")
                 ).add_to(m)
-                st_folium(m, height=250, use_container_width=True, returned_objects=[])
+                components.html(m._repr_html_(), height=260)
         
     with col2:
         if st.session_state.forecast_data:
